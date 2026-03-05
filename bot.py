@@ -5,6 +5,22 @@ Description:
 
 Version: 6.5.0
 """
+from flask import Flask
+from threading import Thread
+
+app = Flask('')
+
+@app.route('/')
+def home():
+    return "Spy is online!"
+
+def run():
+    # Render uses port 10000 by default for free web services
+    app.run(host='0.0.0.0', port=10000)
+
+def keep_alive():
+    t = Thread(target=run)
+    t.start()
 
 import json
 import logging
@@ -178,9 +194,9 @@ class DiscordBot(commands.Bot):
         await self.change_presence(activity=discord.Game(random.choice(statuses)))
 
     @status_task.before_loop
-    async def on_ready():
+    async def on_ready(self):
         print("-------------------")
-        print(f"Logged in as: {client.user.name}")
+        print(f"Logged in as: {self.user.name}")
         print(f"Prefix: {os.getenv('PREFIX')}")
         print(f"Owners: {os.getenv('OWNERS')}")
         print("-------------------")
@@ -205,6 +221,8 @@ class DiscordBot(commands.Bot):
         self.logger.info("-------------------")
         await self.init_db()
         await self.load_cogs()
+        await self.tree.sync() 
+        self.logger.info("The Spy has successfully synced the Command Tree.")
         self.status_task.start()
         self.database = DatabaseManager(
             connection=await aiosqlite.connect(
@@ -316,4 +334,6 @@ class DiscordBot(commands.Bot):
 
 
 bot = DiscordBot()
+
+keep_alive() 
 bot.run(os.getenv("TOKEN"))
