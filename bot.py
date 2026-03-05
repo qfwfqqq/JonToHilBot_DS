@@ -67,12 +67,14 @@ intents.voice_states = True
 intents.webhooks = True
 
 Privileged Intents (Needs to be enabled on developer portal of Discord), please use them only if you need them:
-intents.members = True
-intents.message_content = True
-intents.presences = True
+
 """
 
 intents = discord.Intents.default()
+intents.members = True
+intents.message_content = True
+intents.presences = True
+intents.messages = True
 
 """
 Uncomment this if you want to use prefix (normal) commands.
@@ -334,7 +336,7 @@ class DiscordBot(commands.Bot):
             raise error
 
 
-bot = DiscordBot()
+bot = DiscordBot(intents=intents)
 
 keep_alive() 
 bot.run(os.getenv("TOKEN"))
