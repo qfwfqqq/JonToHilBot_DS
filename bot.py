@@ -207,7 +207,19 @@ class DiscordBot(commands.Bot):
         # 1. Ignore messages from the bot itself or other bots
         if message.author == self.user or message.author.bot:
             return
+            
+        if any(word in message.content.lower() for word in ["spy", "chain", "pyro", "kunai", "n1","clip","rip","noo","fuck"]):
+            if random.random() < 0.60: # 60% chance
+                quotes = [
+            "Diamondback user spotted, kill yourself and stream it tagging my channel in the title.",
+            "STOP INGULFING IN FLAMES EVERY SQUARE INCH OF THE MAP RETARD AND GO PLAY THE OBJECTIVE",
+            "Still watching CRD huh nigga?",
+            "I am the Spy.",
+            "Their medic pees sitting down, litterally why is he there and all his swings are crits ffs",
+            "Off to visit your mother!"
+        ]
 
+                await message.channel.send(random.choice(quotes))
         # 2. Check if the bot was mentioned/pinged
         if self.user.mentioned_in(message):
             await message.channel.send("i chain niggers")
