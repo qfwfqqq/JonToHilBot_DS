@@ -137,7 +137,7 @@ logger.addHandler(file_handler)
 
 
 class DiscordBot(commands.Bot):
-    def __init__(self) -> None:
+    def __init__(self, intents: discord.Intents) -> None:
         super().__init__(
             command_prefix=commands.when_mentioned_or(os.getenv("PREFIX")),
             intents=intents,
