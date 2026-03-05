@@ -239,8 +239,9 @@ class DiscordBot(commands.Bot):
         if message.author == self.user or message.author.bot:
             return
             
+        keywords = ["spy", "chain", "pyro", "kunai", "n1", "clip", "rip", "noo", "fuck"]    
         if any(word in message.content.lower() for word in keywords):
-            if random.random() < 0.60: # 60% chance
+            if random.random() < 0.67: # 67% chance
                 quotes = [
                     "Diamondback user spotted, kill yourself and stream it tagging my channel in the title.",
                     "STOP INGULFING IN FLAMES EVERY SQUARE INCH OF THE MAP RETARD AND GO PLAY THE OBJECTIVE",
@@ -249,7 +250,6 @@ class DiscordBot(commands.Bot):
                     "Their medic pees sitting down, litterally why is he there and all his swings are crits ffs",
                     "Off to visit your mother!"
                 ]
-                # This must be indented exactly under the quotes list
                 await message.channel.send(random.choice(quotes))
             
         # 2. Check if the bot was mentioned/pinged
