@@ -177,7 +177,7 @@ class DiscordBot(commands.Bot):
         statuses = ["Farming Simulator 22", "with my cock!"]
         await self.change_presence(activity=discord.Game(random.choice(statuses)))
 
-    @bot.event
+    @status_task.before_loop
     async def on_ready():
         print("-------------------")
         print(f"Logged in as: {client.user.name}")
