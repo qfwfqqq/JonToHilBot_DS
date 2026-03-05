@@ -203,11 +203,16 @@ class DiscordBot(commands.Bot):
     async def on_message(self, message: discord.Message) -> None:
         """
         The code in this event is executed every time someone sends a message, with or without the prefix
-
-        :param message: The message that was sent.
         """
+        # 1. Ignore messages from the bot itself or other bots
         if message.author == self.user or message.author.bot:
             return
+
+        # 2. Check if the bot was mentioned/pinged
+        if self.user.mentioned_in(message):
+            await message.channel.send("i chain niggers")
+
+        # 3. Continue processing other commands (slash or prefix)
         await self.process_commands(message)
 
     async def on_command_completion(self, context: Context) -> None:
