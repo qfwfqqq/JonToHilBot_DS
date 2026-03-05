@@ -156,6 +156,7 @@ class DiscordBot(commands.Bot):
         """
         The code in this function is executed whenever the bot will start.
         """
+
         for file in os.listdir(f"{os.path.realpath(os.path.dirname(__file__))}/cogs"):
             if file.endswith(".py"):
                 extension = file[:-3]
@@ -176,6 +177,14 @@ class DiscordBot(commands.Bot):
         statuses = ["Farming Simulator 22", "with my cock!"]
         await self.change_presence(activity=discord.Game(random.choice(statuses)))
 
+    @client.event
+    async def on_ready():
+        print("-------------------")
+        print(f"Logged in as: {client.user.name}")
+        print(f"Prefix: {os.getenv('PREFIX')}")
+        print(f"Owners: {os.getenv('OWNERS')}")
+        print("-------------------")
+        
     @status_task.before_loop
     async def before_status_task(self) -> None:
         """
@@ -204,6 +213,7 @@ class DiscordBot(commands.Bot):
         )
 
     async def on_message(self, message: discord.Message) -> None:
+        print(f"DEBUG: Message from {message.author}: {message.content}")
         """
         The code in this event is executed every time someone sends a message, with or without the prefix
         """
